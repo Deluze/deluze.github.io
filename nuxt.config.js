@@ -49,4 +49,8 @@ export default {
   generate: {
     dir: 'docs',
   },
+
+  tailwindcss: {
+    jit: true,
+  },
 }

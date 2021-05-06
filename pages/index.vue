@@ -1,50 +1,36 @@
 <template>
-  <div class="container">
+  <div class="container text-gray-300">
     <div>
-      <Logo />
-      <h1 class="title">
-        deluze.github.io
+      <h1 class="text-6xl font-extralight title-appear">
+        Bart Ramaekers
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+      <div class="mt-8">
+        <button class="mx-4 button-appear">
+          About Me
+        </button>
+        <button class="mx-4 button-appear">
+          Projects
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from '@nuxtjs/composition-api';
+import {defineComponent, useMeta} from '@nuxtjs/composition-api';
 
 export default defineComponent({
-  setup()
-  {
-    
-    return {};
+  head() { return {} },
+  setup() {
+    useMeta({
+      title: 'Home Page',
+    });
   }
 });
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -54,33 +40,28 @@ export default defineComponent({
   text-align: center;
 }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.button-appear {
+  animation: 1300ms buttonApear ease-out;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.title-appear {
+  animation: 1s titleAppear ease-out;
 }
 
-.links {
-  padding-top: 15px;
+@keyframes titleAppear {
+  0% {
+    opacity: 0;
+  }
+}
+
+@keyframes buttonApear {
+  0% {
+    transform: translate(0px, 24px);
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.2;
+  }
 }
 </style>
