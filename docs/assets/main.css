@@ -16,3 +16,11 @@ body {
   margin: 0;
   display: inline-block;
 }
+
+code {
+  background-color: #EDEDED;
+}
+
+.back {
+    margin-top: 128px;
+}
