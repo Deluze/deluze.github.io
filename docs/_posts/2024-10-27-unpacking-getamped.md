@@ -371,7 +371,7 @@ var source = new KarSource(file, pass);
 and that's it!
 
 After dumping the contents of `amped.kar`, the game's source code has been restored.
-There were 7000 total classes in this one file.
+There are over 7000 classes to be found in this one file.
 
 ![Amped Source Tree](/assets/img/source.png)
 
