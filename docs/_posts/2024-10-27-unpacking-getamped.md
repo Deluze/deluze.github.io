@@ -303,7 +303,7 @@ a simple API to extract the contents, so I've just done that.
 
 It appears that `keel.dat` contains encrypted byte code of the game's engine. The file contained 707 classes in total.
 
-But what about the `amped.kar` and `resources.kar` files? We still need to find the encryption keys for those.
+But what about the `amped.kar` and `resources.kar` files? We still need to find the decryption keys for those.
 
 ## Decrypting the amped.kar file
 
