@@ -2,7 +2,7 @@
 layout: post
 title: "Obtaining the source code of GetAmped"
 date: 2024-10-27 00:00:00 +0100
-categories: [reverse engineering]
+categories: [reverse-engineering]
 ---
 
 Any online game, at some point, will go offline. Most commonly due to a decline in player base.
