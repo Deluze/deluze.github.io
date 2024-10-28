@@ -24,3 +24,7 @@ code {
 .back {
     margin-top: 128px;
 }
+
+.highlight {
+    overflow: auto;
+}
