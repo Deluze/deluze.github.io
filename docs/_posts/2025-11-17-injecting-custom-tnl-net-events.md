@@ -180,7 +180,7 @@ _snippet from top of NetClassRep::initialize:_
 
 In my case, the address `0x7c4e48` points to `NetClassRep::mClassLinkList`.
 
-## Injecting custom NetEvents.
+## Injecting custom NetEvents
 
 Our SDK links against TNL, which allows us to use TNL in our SDK.
 
