@@ -1,16 +1,17 @@
 ---
 layout: post
-title: "Injecting custom TNL events into QPang"
+title: "Injecting custom TNL NetEvents into QPang"
 date: 2025-11-17 00:00:00 +0100
 categories: [ reverse-engineering, tnl ]
 ---
 
-During the development of the "QPang SDK" project
-we got the idea that it would be really useful to be able to 
-extend the game's available TNL NetEvents with our own.
+We wanted to add custom TNL NetEvents into our game we are modding, without hooking & patching existing events.
+Something one can't easily do without the original game's source code, yet we did it anyway.
+The game in question is QPang.
 
-To preface; this blog is not a tutorial on how to use TNL nor how to reverse engineer, 
-but meant for that _one_ person who might run into the same problem/idea in the future.
+To preface; This blog not a tutorial on how to use TNL nor how to reverse engineer,
+but meant for that _one_ person who might have the same idea in the future, 
+decides to Google and somehow ends up on this blog.
 
 For that one person, I hope this is resourceful.
 
@@ -67,7 +68,7 @@ So? If we don't have access to the source code, how would we go
 about adding custom NetEvents to our game?
 
 In theory, you can hope that the game you are reverse engineering
-has a NetEvent that's reading a large string, or is making use of TNL's ByteBuffer.
+has a NetEvent that's reading a large string, or is making use of TNL's `ByteBuffer`.
 You'd be able to hook the NetEvent's `process` function and implement some custom client logic
 that unpacks the string into a custom data structure.
 However, this is, in practice, hacky to implement on both client & server side, and might be off limits for some games.
