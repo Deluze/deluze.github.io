@@ -12,7 +12,7 @@ extend the game's available TNL NetEvents with our own.
 To preface; this blog is not a tutorial on how to use TNL nor how to reverse engineer, 
 but meant for that _one_ person who might run into the same problem/idea in the future.
 
-For that one person, I hope this helps.
+For that one person, I hope this is resourceful.
 
 ## Torque Network Library (TNL)
 
