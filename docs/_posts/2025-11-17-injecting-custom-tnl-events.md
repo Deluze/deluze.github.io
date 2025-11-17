@@ -40,8 +40,8 @@ class SimpleMessageEvent : public NetEvent
     char *msg;
 
 public:
-SimpleMessageEvent(const char *message = NULL);
-~SimpleMessageEvent();
+    SimpleMessageEvent(const char *message = NULL);
+    ~SimpleMessageEvent();
 
     virtual void pack   (EventConnection *conn, BitStream *bstream)
     virtual void unpack (EventConnection *conn, BitStream *bstream);
@@ -97,13 +97,13 @@ In the constructor of `NetClassRepInstance`, the "Class Link List", AKA `mClassL
 {% highlight cpp %}
 NetClassRepInstance(const char *className, U32 groupMask, NetClassType classType, S32 classVersion)
 {
-// Store data about ourselves
-mClassName = strdup(className);
-mClassType = classType;
-mClassGroupMask = groupMask;
-mClassVersion = classVersion;
-for(U32 i = 0; i < NetClassGroupCount; i++)
-mClassId[i] = 0;
+    // Store data about ourselves
+    mClassName = strdup(className);
+    mClassType = classType;
+    mClassGroupMask = groupMask;
+    mClassVersion = classVersion;
+    for(U32 i = 0; i < NetClassGroupCount; i++)
+        mClassId[i] = 0;
 
     // link the class into our global list
     mNextClass = mClassLinkList;
@@ -225,7 +225,7 @@ TNL::NetClassRep* customClassList = TNL::NetClassRep::mClassLinkList;
 
 for (auto i = 0; i < 3; i++)
 {
-customClassList = customClassList->mNextClass;
+    customClassList = customClassList->mNextClass;
 }
 
 TNL::NetClassRep* originalClassList = *reinterpret_cast<TNL::NetClassRep**>(0x7c4e48);
