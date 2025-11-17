@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 body {
-  font-family: "Roboto Mono", monospace;
-  max-width: 800px;
-  padding: 0px 12px 8px 12px;
-  margin: auto;
+    font-family: "Roboto Mono", monospace;
+    max-width: 800px;
+    padding: 0px 12px 8px 12px;
+    margin: auto;
 }
 
 .post-meta {
-  font-size: 0.6em;
+    font-size: 0.6em;
 }
 
 .post-excerpt {
-  font-size: 0.8em;
-  margin: 0;
-  display: inline-block;
+    font-size: 0.8em;
+    margin: 0;
+    display: inline-block;
 }
 
 code {
-  background-color: #EDEDED;
+    background-color: #EDEDED;
 }
 
 .back {
@@ -27,4 +27,6 @@ code {
 
 .highlight {
     overflow: auto;
+    background-color: #EDEDED;
+    padding: 4px;
 }
