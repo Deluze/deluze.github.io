@@ -248,6 +248,9 @@ so with the above setup, we don't have to worry about our custom event getting i
 The last step is on you. The custom event also needs to be implemented on the server side.
 TNL will abort the connection during the handshake phase when the class count between client & server mismatch.
 
+TNL also offers RPC Events. An RPC Event is essentially just a NetEvent with a lot of sugar on top.
+The above setup will also work for RPC Events out of the box, without additional setup.
+
 ## Sources
 
 - [OpenTNL DoxyDocs](https://opentnl.sourceforge.net/doxytree/index.html)
