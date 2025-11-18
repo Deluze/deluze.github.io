@@ -5,23 +5,23 @@ date: 2025-11-17 00:00:00 +0100
 categories: [ reverse-engineering, tnl ]
 ---
 
-We wanted to add custom TNL NetEvents into our game we are modding, without hooking & patching existing events.
+We wanted to add custom TNL NetEvents into the game we are modding, without hooking & patching existing events.
 Something one can't easily do without the original game's source code, yet we did it anyway.
 The game in question is QPang.
 
-To preface; This post is not a tutorial on how to use TNL nor how to reverse engineer,
-but meant for that _one_ person who might have the same idea in the future, 
-decides to Google and somehow ends up on this blog.
+To preface; This post is not a tutorial on how to use TNL nor how to reverse engineer it,
+instead it is meant for that _one_ person who might have the same idea in the future, 
+decides to Google and somehow ends up on this post.
 
 For that one person, I hope this is resourceful.
 
 ## Torque Network Library (TNL)
 
-TNL is a C++ network library targeted for game development,
-which was in development around the 90's and early 00's.
-It was used in the Torque Game Engine (which costed at least \$100 for an indie license),
-different game engines such as Virtools 4,
-but could also be used as a standalone library.
+TNL is a C++ network library targeted at game development.
+It was in development around the 90's and early 00's, and originally 
+built for the Torque Game Engine.
+Some other engines like Virtools 4 gave you the option to use TNL, 
+but you could also use it as a standalone library.
 In the case of QPang, it was used as a standalone library.
 
 TNL provides a concept named "NetEvent".
@@ -58,19 +58,21 @@ TNL_IMPLEMENT_NETEVENT(SimpleMessageEvent, NetClassGroupGameMask,0);
 The `TNL_DECLARE_CLASS` and `TNL_IMPLEMENT_NETEVENT` do some macro magic
 to add some (static) member variables/methods that TNL uses internally.
 
-There's nothing more to it. This NetEvent will be understood both by the client & server, as long as it lives inside the
-binary.
+There's nothing more to it. This NetEvent will be understood both by the client & server.
 But that's also already the caveat to TNL; the library doesn't provide an API to
 add new NetEvents during run-time. NetEvents must be declared during build-time.
 
-So? If we don't have access to the source code, how would we go
-about adding custom NetEvents to our game?
+So? If you don't have access to the source code, how would you go
+about adding custom NetEvents to your game?
 
-In theory, you can hope that the game you are reverse engineering
+In theory, you can hope that the game you're modding
 has a NetEvent that's reading a large string, or is making use of TNL's `ByteBuffer`.
 You'd be able to hook the NetEvent's `process` function and implement some custom client logic
 that unpacks the string into a custom data structure.
 However, this is, in practice, hacky to implement on both client & server side, and might be off limits for some games.
+
+For us, with the amount of custom features that we are working on, 
+it made more sense to find an approach that allows us to add NetEvents the intended way.
 
 ## TNL Internals
 
@@ -83,7 +85,7 @@ which falls under the `NetClassRep` scope. As the name implies, it's a linked li
 or more precisely, `NetClassRepInstance` instances. A `NetClassRepInstance` provides an API to construct a
 `NetEvent` by name and/or internal id.
 
-If we expand the `TNL_DECLARE_CLASS` macro, it will declare a static `NetClassRepInstance`, like so:
+If you expand the `TNL_DECLARE_CLASS` macro, it will declare a static `NetClassRepInstance`, like so:
 
 {% highlight cpp %}
 #define TNL_DECLARE_CLASS(className) \
@@ -91,7 +93,7 @@ static TNL::NetClassRepInstance<className> dynClassRep;      \
 virtual TNL::NetClassRep* getClassRep() const
 {% endhighlight %}
 
-In the constructor of `NetClassRepInstance`, the "Class Link List", AKA `mClassLinkList` is updated to include the
+And in the constructor of `NetClassRepInstance`, the "Class Link List", AKA `mClassLinkList` is updated to include the
 `NetEvent` in the linked list:
 
 {% highlight cpp %}
@@ -116,6 +118,7 @@ Then, after all these instances have been statically initialized,
 there's a function named `NetClassRep::initialize` which is responsible for parsing this linked list,
 assigning unique ids to the instances, and ultimately storing them in a table so that TNL can handle the events
 the moment they come in over the network.
+This function is called whenever a `NetInterface` is constructed during run-time.
 
 _snippet (simplified):_
 {% highlight cpp %}
@@ -148,6 +151,10 @@ or without a lot of effort. So we must register our NetEvents before this functi
 
 ## Finding the ClassLinkList
 
+To add new NetEvents, you need to locate the static `NetClassRep::mClassLinkList` variable in the binary.
+If this offset is located, you can simply append your own `NetClassRepInstance` instances
+to the game's `NetClassRep::mClassLinkList` before `NetClassRep::initialize` is called.
+
 The offset of `NetClassRep::mClassLinkList` is a blatant giveaway.
 The function that references this offset contains a string literal that will be baked into the binary,
 so finding it is not a difficult task.
@@ -157,7 +164,7 @@ so finding it is not a difficult task.
 {% endhighlight %}
 
 With a simple string search `NetClassRep::initialize` can be found,
-and therefore also the static `NetClassRep::mClassLinkList` variable:
+and therefore also `NetClassRep::mClassLinkList`:
 
 _snippet from top of `NetClassRep::initialize`:_
 {% highlight assembly %}
@@ -206,11 +213,11 @@ public:
 TNL_IMPLEMENT_NETEVENT(CustomEvent, NetClassGroupGameMask,0);
 {% endhighlight %}
 
-Our `CustomEvent` still needs to be injected into the game's class link list.
-Our SDK's TNL linkage will cause a 2nd TNL "instance" to exist. One in our SDK's DLL and one in the game's binary.
-AKA, there are now 2 class link lists, and we must make the game's class link list aware about ours.
+The `CustomEvent` still needs to be injected into the game's class link list.
+Our SDK's TNL linkage will cause a 2nd TNL "instance" to exist. One in the SDK's DLL and one in the game's binary.
+AKA, there are now 2 class link lists, and we must make the game's class link list aware about the new one.
 
-In our SDK, we have created a hook that hooks into the `NetClassRep::initialize` function.
+In the SDK, we have created a hook that hooks into the `NetClassRep::initialize` function.
 This ensures our custom NetEvents will be registered before they are initialized:
 
 {% highlight cpp %}
@@ -250,7 +257,7 @@ The last step is on you. The custom event also needs to be implemented on the se
 TNL will abort the connection during the handshake phase when the class count between client & server mismatch.
 
 TNL also offers RPC Events. An RPCEvent is essentially just a NetEvent with a lot of sugar on top.
-The above setup will also work for RPCEvents out of the box, without additional setup.
+The above setup will also work for RPCEvents out of the box.
 
 ## Sources
 
