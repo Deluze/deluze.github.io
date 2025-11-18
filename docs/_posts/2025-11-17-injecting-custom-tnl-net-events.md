@@ -158,7 +158,7 @@ so finding it is not a difficult task.
 {% endhighlight %}
 
 With a simple string search `NetClassRep::initialize` can be found,
-and therefore also the static `NetClassRep::mClassLinkList`:
+and therefore also the static `NetClassRep::mClassLinkList` variable:
 
 _snippet from top of NetClassRep::initialize:_
 {% highlight assembly %}
