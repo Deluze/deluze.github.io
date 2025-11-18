@@ -150,7 +150,8 @@ or without a lot of effort. So we must register our NetEvents before this functi
 ## Finding the ClassLinkList
 
 The offset of `NetClassRep::mClassLinkList` is a blatant giveaway.
-The function that references this offset contains a string literal that will be baked into the binary.
+The function that references this offset contains a string literal that will be baked into the binary,
+so finding it is not a difficult task.
 
 {% highlight txt %}
 "Class Group: %d Class Type: %d count: %d"
@@ -249,8 +250,8 @@ so with the above setup, we don't have to worry about our custom event getting i
 The last step is on you. The custom event also needs to be implemented on the server side.
 TNL will abort the connection during the handshake phase when the class count between client & server mismatch.
 
-TNL also offers RPC Events. An RPC Event is essentially just a NetEvent with a lot of sugar on top.
-The above setup will also work for RPC Events out of the box, without additional setup.
+TNL also offers RPC Events. An RPCEvent is essentially just a NetEvent with a lot of sugar on top.
+The above setup will also work for RPCEvents out of the box, without additional setup.
 
 ## Sources
 
