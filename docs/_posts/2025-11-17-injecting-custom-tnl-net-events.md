@@ -24,7 +24,6 @@ different game engines such as Virtools 4,
 but could also be used as a standalone library.
 In the case of QPang, it was used as a standalone library.
 
-To summarize the "packet" interface that we want to inject into our game;
 TNL provides a concept named "NetEvent".
 A NetEvent is a class that gives you the building blocks
 to write & read data over the network.
