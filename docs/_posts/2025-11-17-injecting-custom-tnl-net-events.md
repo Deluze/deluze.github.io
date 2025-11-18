@@ -9,7 +9,7 @@ We wanted to add custom TNL NetEvents into our game we are modding, without hook
 Something one can't easily do without the original game's source code, yet we did it anyway.
 The game in question is QPang.
 
-To preface; This blog not a tutorial on how to use TNL nor how to reverse engineer,
+To preface; This post is not a tutorial on how to use TNL nor how to reverse engineer,
 but meant for that _one_ person who might have the same idea in the future, 
 decides to Google and somehow ends up on this blog.
 
