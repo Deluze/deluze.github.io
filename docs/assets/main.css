@@ -29,8 +29,5 @@ code {
     overflow: auto;
     background-color: #EDEDED;
     padding: 4px;
-}
-
-figure .highlight {
     margin: 0;
 }
