@@ -11,7 +11,7 @@ The game in question is QPang.
 
 To preface; This post is not a tutorial on how to use TNL nor how to reverse engineer it,
 instead it is meant for that _one_ person who might have the same idea in the future, 
-decides to Google and somehow ends up on this post.
+decides to Google and somehow lands on this post.
 
 For that one person, I hope this is resourceful.
 
